@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sergiylunyov.spring.mvc</groupId>
-  <artifactId>Alishev_CRUD_BD_JDBC_API</artifactId>
+  <artifactId>CRUD_BD_JDBC_API_UserList</artifactId>
   <packaging>war</packaging>
   <properties>
     <version.spring>5.3.13</version.spring>
