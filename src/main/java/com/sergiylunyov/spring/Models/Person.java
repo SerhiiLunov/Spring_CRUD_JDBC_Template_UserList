@@ -2,10 +2,7 @@ package com.sergiylunyov.spring.Models;
 
 import com.sergiylunyov.spring.Validation.StartsWithUppercase;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Person {
     private int id;
@@ -15,6 +12,7 @@ public class Person {
     private String name;
 
     @Min(value = 0, message = "Age should not be greater then 0")
+    @Max(value = 150, message = "Age should not be less then 150")
     private int age;
 
     @NotBlank(message = "Email should not be empty")

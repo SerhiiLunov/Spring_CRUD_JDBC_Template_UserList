@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sergiylunyov.spring.mvc</groupId>
-  <artifactId>CRUD_BD_JDBC_API_UserList</artifactId>
+  <artifactId>Spring_CRUD_JDBC_Template_UserList</artifactId>
   <packaging>war</packaging>
   <properties>
     <version.spring>5.3.13</version.spring>
@@ -10,7 +10,7 @@
     <maven.compiler.target>11</maven.compiler.target>
   </properties>
   <version>1.0-SNAPSHOT</version>
-  <name>spring_course_Alishev_CRUD Maven Webapp</name>
+  <name>spring CRUD Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
 
@@ -36,6 +36,12 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
+      <version>${version.spring}</version>
+    </dependency>
+<!--44444444-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
       <version>${version.spring}</version>
     </dependency>
 
@@ -96,7 +102,7 @@
     </dependency>
 
   </dependencies>
+
   <build>
-    <finalName>spring_course_Alishev_CRUD</finalName>
   </build>
 </project>

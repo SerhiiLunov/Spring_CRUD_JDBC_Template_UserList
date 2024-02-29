@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,40 +14,59 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
-    @Configuration
-    @ComponentScan("com.sergiylunyov.spring")
-    @EnableWebMvc
-    public class MyConfig implements WebMvcConfigurer {
+import javax.sql.DataSource;
+import java.sql.DriverManager;
 
-        private final ApplicationContext applicationContext;
+@Configuration
+@ComponentScan("com.sergiylunyov.spring")
+@EnableWebMvc
+public class MyConfig implements WebMvcConfigurer {
 
-        @Autowired
-        public MyConfig(ApplicationContext applicationContext) {
-            this.applicationContext = applicationContext;
-        }
+    private final ApplicationContext applicationContext;
 
-        @Bean
-        public SpringResourceTemplateResolver templateResolver() {
-            SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-            templateResolver.setApplicationContext(applicationContext);
-            templateResolver.setPrefix("/WEB-INF/views/");
-            templateResolver.setSuffix(".html");
-            return templateResolver;
-        }
-
-        @Bean
-        public SpringTemplateEngine templateEngine() {
-            SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-            templateEngine.setTemplateResolver(templateResolver());
-            templateEngine.setEnableSpringELCompiler(true);
-            return templateEngine;
-        }
-
-        @Override
-        public void configureViewResolvers(ViewResolverRegistry registry) {
-            ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-            resolver.setTemplateEngine(templateEngine());
-            registry.viewResolver(resolver);
-        }
+    @Autowired
+    public MyConfig(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
+
+    @Bean
+    public SpringResourceTemplateResolver templateResolver() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setApplicationContext(applicationContext);
+        templateResolver.setPrefix("/WEB-INF/views/");
+        templateResolver.setSuffix(".html");
+        return templateResolver;
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.setEnableSpringELCompiler(true);
+        return templateEngine;
+    }
+
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
+        registry.viewResolver(resolver);
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource driverManagerData = new DriverManagerDataSource();
+        driverManagerData.setDriverClassName("org.postgresql.Driver");
+        driverManagerData.setUrl("jdbc:postgresql://localhost:5434/spring_CRUD_JDBC_Template_User_List_bd");
+        driverManagerData.setPassword("postgres");
+        driverManagerData.setUsername("postgres");
+
+        return driverManagerData;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
+    }
+}
 
